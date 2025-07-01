@@ -29,7 +29,7 @@ const Addservice = () => {
 
     axios
       .post(
-        "https://service-sharing-server-bay.vercel.app/addservice",
+        "https://b11a11-server-side-rifatalam240.vercel.app/addservice",
         servicedata,
         {
           headers: { authorization: `Bearer ${user.accessToken}` },

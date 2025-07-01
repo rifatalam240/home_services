@@ -27,7 +27,7 @@ const AllContextProvider = ({ children }) => {
       // if (currentUser?.email) {
       //   const userdata = { email: currentUser.email };
       //   axios
-      //     .post("https://service-sharing-server-bay.vercel.app/jwt", userdata)
+      //     .post("https://b11a11-server-side-rifatalam240.vercel.app/jwt", userdata)
       //     .then((res) => {
       //       console.log("token", res.data.token);
       //       const token = res.data.token;

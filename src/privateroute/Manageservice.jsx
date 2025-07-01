@@ -12,7 +12,7 @@ const ManageServices = () => {
   useEffect(() => {
     if (user?.email) {
       fetch(
-        `https://service-sharing-server-bay.vercel.app/userservice?email=${user.email}`,
+        `https://b11a11-server-side-rifatalam240.vercel.app/userservice?email=${user.email}`,
         {
           headers: { authorization: `Bearer ${user.accessToken}` },
         }
@@ -46,7 +46,7 @@ const ManageServices = () => {
     console.log("delete", user.accessToken);
 
     fetch(
-      `https://service-sharing-server-bay.vercel.app/updateservice/${editingService._id}`,
+      `https://b11a11-server-side-rifatalam240.vercel.app/updateservice/${editingService._id}`,
       {
         method: "PUT",
         headers: {
@@ -87,7 +87,7 @@ const ManageServices = () => {
     }).then((result) => {
       if (result.isConfirmed) {
         fetch(
-          `https://service-sharing-server-bay.vercel.app/deleteservice/${id}`,
+          `https://b11a11-server-side-rifatalam240.vercel.app/deleteservice/${id}`,
           {
             method: "DELETE",
             headers: {

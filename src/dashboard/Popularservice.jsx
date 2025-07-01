@@ -17,8 +17,10 @@ const Popularservice = () => {
     }
   };
 
+  // const shortDescription =
+  // service.description.split(" ").slice(0, 10).join(" ") + "...";
   useEffect(() => {
-    fetch("https://service-sharing-server-bay.vercel.app/service")
+    fetch("https://b11a11-server-side-rifatalam240.vercel.app/service")
       .then((res) => res.json())
       .then((data) => setService(data))
       .catch((error) => console.log(error));
@@ -51,8 +53,7 @@ const Popularservice = () => {
           <FaArrowRight />
         </button>
       </div>
-
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
         {service.map((services, index) => (
           <div key={index} className="card bg-base-200 shadow-md">
             <figure className="w-full h-56">
@@ -68,8 +69,8 @@ const Popularservice = () => {
                   {services.serviceName}
                 </h3>
                 <p className="text-gray-600 mb-2">
-                  {services.description.length > 100
-                    ? services.description.slice(0, 100) + "..."
+                  {services.description.length > 40
+                    ? services.description.slice(0, 40) + "..."
                     : services.description}
                 </p>
               </div>
@@ -92,11 +93,11 @@ const Popularservice = () => {
                 <motion.button
                   animate={{
                     color: [
-                      "#335eff",
-                      "#ff3368",
-                      "#33ffc7",
-                      "#ff5b33",
-                      "#ff3349",
+                      "#ffffff", // white
+                      "#fdfd96", // pastel yellow
+                      "#00ffe7", // bright aqua
+                      "#ffe600", // bright yellow
+                      "#ccff00",
                     ],
                     transition: { duration: 4, repeat: Infinity },
                   }}

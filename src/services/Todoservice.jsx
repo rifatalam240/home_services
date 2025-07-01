@@ -11,14 +11,11 @@ const ServiceToDo = () => {
   useEffect(() => {
     const fetchToDoServices = async () => {
       try {
-        const res = await fetch(
-          `https://service-sharing-server-bay.vercel.app/servicetodo?email=${user.email}`,
-          {
-            headers: {
-              authorization: `Bearer ${user.accessToken}`,
-            },
-          }
-        );
+        const res = await fetch(`todo?email=${user.email}`, {
+          headers: {
+            authorization: `Bearer ${user.accessToken}`,
+          },
+        });
         const data = await res.json();
         setServices(data);
         setLoading(false);
@@ -35,7 +32,7 @@ const ServiceToDo = () => {
   const handleStatusChange = async (id, newStatus) => {
     try {
       const res = await fetch(
-        `https://service-sharing-server-bay.vercel.app/bookingstatus/${id}`,
+        `https://b11a11-server-side-rifatalam240.vercel.app/bookingstatus/${id}`,
         {
           method: "PATCH",
           headers: {

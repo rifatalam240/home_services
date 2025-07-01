@@ -24,7 +24,7 @@ const Banner = () => {
     debounceTimeout.current = setTimeout(() => {
       setLoading(true);
       fetch(
-        `https://service-sharing-server-bay.vercel.app/search?searchparams=${search}`
+        `https://b11a11-server-side-rifatalam240.vercel.app/search?searchparams=${search}`
       )
         .then((res) => res.json())
         .then((data) => {

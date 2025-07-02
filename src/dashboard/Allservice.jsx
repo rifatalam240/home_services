@@ -7,7 +7,7 @@ const Allservice = () => {
   const [sortBy, setSortBy] = useState(""); // sorting state
 
   useEffect(() => {
-    fetch("https://b11a11-server-side-rifatalam240-l6pcmu5k2.vercel.app/allservice")
+    fetch("https://b11a11-server-side-rifatalam240.vercel.app/allservice")
       .then((res) => res.json())
       .then((data) => setServices(data))
       .catch((err) => console.log(err));

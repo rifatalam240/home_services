@@ -32,7 +32,7 @@ const ServiceToDo = () => {
   const handleStatusChange = async (id, newStatus) => {
     try {
       const res = await fetch(
-        `https://b11a11-server-side-rifatalam240-l6pcmu5k2.vercel.app/bookingstatus/${id}`,
+        `https://b11a11-server-side-rifatalam240.vercel.app/bookingstatus/${id}`,
         {
           method: "PATCH",
           headers: {

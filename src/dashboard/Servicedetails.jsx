@@ -20,7 +20,7 @@ const Servicedetails = () => {
     const fetchService = async () => {
       try {
         const res = await fetch(
-          `https://b11a11-server-side-rifatalam240-l6pcmu5k2.vercel.app/service/${id}`
+          `https://b11a11-server-side-rifatalam240.vercel.app/service/${id}`
         );
         if (!res.ok) throw new Error("Service not found");
         const data = await res.json();
@@ -88,7 +88,7 @@ const Servicedetails = () => {
 
     try {
       const res = await fetch(
-        "https://b11a11-server-side-rifatalam240-l6pcmu5k2.vercel.app/servicebooking",
+        "https://b11a11-server-side-rifatalam240.vercel.app/servicebooking",
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },

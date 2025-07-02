@@ -4,6 +4,7 @@ import { NavLink } from "react-router";
 
 const Allservice = () => {
   const [services, setServices] = useState([]);
+  const [sortBy, setSortBy] = useState(""); // sorting state
 
   useEffect(() => {
     fetch("https://b11a11-server-side-rifatalam240.vercel.app/allservice")
@@ -12,14 +13,36 @@ const Allservice = () => {
       .catch((err) => console.log(err));
   }, []);
 
+  // Sorting logic
+  const sortedServices = [...services].sort((a, b) => {
+    if (sortBy === "priceLow") return a.price - b.price;
+    if (sortBy === "priceHigh") return b.price - a.price;
+    if (sortBy === "nameAZ") return a.serviceName.localeCompare(b.serviceName);
+    if (sortBy === "nameZA") return b.serviceName.localeCompare(a.serviceName);
+    return 0;
+  });
+
   return (
     <section className="py-10 px-2 md:px-8 lg:px-32 ">
-      {/* bg-gradient-to-br from-blue-50 to-white min-h-screen */}
       <h2 className="text-2xl md:text-3xl font-bold text-center text-[#e3006e] mb-8">
         All Services
       </h2>
+      {/* Sorting Dropdown */}
+      <div className="flex justify-center mb-6">
+        <select
+          className="select select-bordered w-full max-w-xs"
+          value={sortBy}
+          onChange={(e) => setSortBy(e.target.value)}
+        >
+          <option value="">Sort By</option>
+          <option value="priceLow">Price: Low to High</option>
+          <option value="priceHigh">Price: High to Low</option>
+          <option value="nameAZ">Name: A-Z</option>
+          <option value="nameZA">Name: Z-A</option>
+        </select>
+      </div>
       <div className="flex flex-col gap-8 max-w-2xl mx-auto">
-        {services.map((service, idx) => (
+        {sortedServices.map((service, idx) => (
           <div
             key={idx}
             className="bg-white rounded-2xl shadow-lg border border-[#e3006e30] flex flex-col md:flex-row overflow-hidden hover:shadow-2xl transition-shadow duration-300"

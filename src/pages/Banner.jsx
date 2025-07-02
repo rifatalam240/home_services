@@ -10,6 +10,44 @@ const Banner = () => {
   const [search, setSearch] = useState("");
   const [results, setResults] = useState([]);
   const debounceTimeout = useRef(null);
+  const dropdownRef = useRef(null);
+
+  // 🔻 Click outside to close dropdown
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (
+        dropdownRef.current &&
+        !dropdownRef.current.contains(event.target)
+      ) {
+        setResults([]);
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
+
+  const handleSearch = () => {
+    if (search.trim() === "") {
+      setResults([]);
+      setLoading(false);
+      return;
+    }
+    setLoading(true);
+    fetch(
+      `https://b11a11-server-side-rifatalam240.vercel.app/search?searchparams=${search}`
+    )
+      .then((res) => res.json())
+      .then((data) => {
+        setResults(data);
+        setLoading(false);
+      })
+      .catch((error) => {
+        console.error("Search fetch error:", error);
+        setLoading(false);
+      });
+  };
 
   useEffect(() => {
     if (search.trim() === "") {
@@ -18,7 +56,6 @@ const Banner = () => {
       return;
     }
 
-    // Debounce logic: 300ms পরে fetch চালাবে
     if (debounceTimeout.current) clearTimeout(debounceTimeout.current);
 
     debounceTimeout.current = setTimeout(() => {
@@ -37,7 +74,6 @@ const Banner = () => {
         });
     }, 300);
 
-    // Cleanup on unmount
     return () => clearTimeout(debounceTimeout.current);
   }, [search, setLoading]);
 
@@ -64,9 +100,15 @@ const Banner = () => {
           One-stop solution for your services. Order any service, anytime.
         </p>
 
-        {/* Search Box */}
-        <div className="mt-5">
-          <div className="flex justify-center items-center bg-white rounded-sm py-1 px-2 w-[300px] md:w-[500px] space-x-2">
+        {/* 🔍 Search Form */}
+        <div className="mt-5" ref={dropdownRef}>
+          <form
+            onSubmit={(e) => {
+              e.preventDefault();
+              handleSearch();
+            }}
+            className="flex justify-center items-center bg-white rounded-sm py-1 px-2 w-[300px] md:w-[500px] space-x-2"
+          >
             <input
               type="text"
               name="search"
@@ -75,45 +117,47 @@ const Banner = () => {
               placeholder="Search for home repair services..."
               className="input input-bordered w-full bg-white text-blue-600"
             />
-            <div className="bg-pink-800 p-2 rounded-sm text-white">
+            <button
+              type="submit"
+              aria-label="Search"
+              className="bg-pink-800 p-2 rounded-sm text-white hover:bg-pink-700 focus:outline-none focus:ring-2 focus:ring-pink-500 transition"
+            >
               <FaSearch />
+            </button>
+          </form>
+
+          {/* ⏳ Loading Spinner */}
+          {loading && (
+            <div className="mt-4">
+              <Loading_spinner />
             </div>
-          </div>
-        </div>
+          )}
 
-        {/* Loading Spinner */}
-        {loading && (
-          <div className="mt-4">
-            <Loading_spinner />
-          </div>
-        )}
-
-        {/* Search Results */}
-        {results.length > 0 && !loading && (
-          <div className="bg-white text-black mt-6 p-4 rounded-lg w-[300px] md:w-[500px] max-h-60 overflow-y-auto shadow-md">
-            {results.map((item) => (
-              <div
-                key={item._id}
-                className="p-2 border-b flex justify-between items-center"
-              >
-                <span>{item.serviceName}</span>
-                <NavLink
-                  to={`/servicedetail/${item._id}`}
-                  className="text-sm text-blue-600 underline"
+          {/* 🔽 Search Results */}
+          {results.length > 0 && !loading && (
+            <div className="bg-white text-black mt-2 p-4 rounded-lg w-[300px] md:w-[500px] max-h-60 overflow-y-auto shadow-md z-50">
+              {results.map((item) => (
+                <div
+                  key={item._id}
+                  className="p-2 border-b flex justify-between items-center"
                 >
-                  Details
-                </NavLink>
-              </div>
-            ))}
-          </div>
-        )}
+                  <span>{item.serviceName}</span>
+                  <NavLink
+                    to={`/servicedetail/${item._id}`}
+                    className="text-sm text-blue-600 underline"
+                  >
+                    Details
+                  </NavLink>
+                </div>
+              ))}
+            </div>
+          )}
 
-        {/* No Results Found */}
-        {search && !loading && results.length === 0 && (
-          <div className="text-white mt-4">
-            No services matched your search.
-          </div>
-        )}
+          {/* 🚫 No Result */}
+          {search && !loading && results.length === 0 && (
+            <div className="text-white mt-4">No services matched your search.</div>
+          )}
+        </div>
       </motion.div>
     </div>
   );

@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { FaEdit, FaTrash } from "react-icons/fa";
+import { FaEdit, FaTrash, FaTable, FaThLarge } from "react-icons/fa";
 import { useAllContext } from "../context/AllContext";
 import Swal from "sweetalert2";
 
@@ -8,6 +8,7 @@ const ManageServices = () => {
   const [services, setServices] = useState([]);
   const [showModal, setShowModal] = useState(false);
   const [editingService, setEditingService] = useState(null);
+  const [viewMode, setViewMode] = useState("table"); // default view
 
   useEffect(() => {
     if (user?.email) {
@@ -21,12 +22,9 @@ const ManageServices = () => {
         .then((data) => setServices(data));
     }
   }, [user]);
+
   useEffect(() => {
-    if (showModal) {
-      document.body.style.overflow = "hidde";
-    } else {
-      document.body.style.overflow = "auto";
-    }
+    document.body.style.overflow = showModal ? "hidden" : "auto";
     return () => {
       document.body.style.overflow = "auto";
     };
@@ -40,10 +38,8 @@ const ManageServices = () => {
       serviceImage: form.serviceImage.value,
       price: parseFloat(form.price.value),
       serviceArea: form.serviceArea.value,
-
       description: form.description.value,
     };
-    console.log("delete", user.accessToken);
 
     fetch(
       `https://b11a11-server-side-rifatalam240.vercel.app/updateservice/${editingService._id}`,
@@ -100,11 +96,7 @@ const ManageServices = () => {
           .then((data) => {
             if (data.deletedCount > 0) {
               setServices(services.filter((service) => service._id !== id));
-              Swal.fire(
-                "Deleted!",
-                "Your service has been deleted.",
-                "success"
-              );
+              Swal.fire("Deleted!", "Your service has been deleted.", "success");
             } else {
               Swal.fire("Error", "Failed to delete the service.", "error");
             }
@@ -117,17 +109,92 @@ const ManageServices = () => {
   };
 
   return (
-    <div className="max-w-6xl mx-auto px-4 py-6">
-      <h2 className="text-2xl md:text-3xl font-semibold mb-6 text-left">
-        Manage Your Services
-      </h2>
+    <div className="w-full max-w-[1400px] mx-auto px-4 py-6">
+      <div className="flex flex-row flex-wrap items-center justify-between gap-4 mb-6">
+        <h2 className="text-2xl md:text-3xl font-semibold text-left">
+          Manage Your Services
+        </h2>
+        <div className="flex gap-2">
+          <button
+            className={`btn btn-sm flex items-center gap-1 ${viewMode === "table" ? "btn-primary" : "btn-outline"}`}
+            onClick={() => setViewMode("table")}
+          >
+            <FaTable /> Table View
+          </button>
+          <button
+            className={`btn btn-sm flex items-center gap-1 ${viewMode === "card" ? "btn-primary" : "btn-outline"}`}
+            onClick={() => setViewMode("card")}
+          >
+            <FaThLarge /> Card View
+          </button>
+        </div>
+      </div>
 
+
+      {/* No services message */}
       {services.length === 0 ? (
         <p className="text-center text-gray-500">
           You haven't added any services yet.
         </p>
+      ) : viewMode === "table" ? (
+        /* Table View */
+        <div className="w-full overflow-x-auto">
+          <table className="table w-full bg-white rounded-xl shadow-md">
+            <thead>
+              <tr>
+                <th>Image</th>
+                <th>Service Name</th>
+                <th>Price (৳)</th>
+                <th>Area</th>
+                <th>Description</th>
+                <th className="text-center">Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              {services.map((service) => (
+                <tr key={service._id}>
+                  <td>
+                    <img
+                      src={service.serviceImage}
+                      alt={service.serviceName}
+                      className="h-14 w-20 object-cover rounded"
+                    />
+                  </td>
+                  <td>{service.serviceName}</td>
+                  <td>{service.price}</td>
+                  <td>{service.serviceArea}</td>
+                  <td>
+                    <span className="line-clamp-2 block max-w-xs">
+                      {service.description}
+                    </span>
+                  </td>
+                  <td>
+                    <div className="flex gap-2 justify-center">
+                      <button
+                        onClick={() => {
+                          setEditingService(service);
+                          setShowModal(true);
+                        }}
+                        className="px-3 py-1 flex items-center gap-1 bg-[#e3006e] text-white rounded hover:bg-blue-700 transition-all"
+                      >
+                        <FaEdit size={14} /> Edit
+                      </button>
+                      <button
+                        onClick={() => handleDelete(service._id)}
+                        className="text-[#e3006e] font-bold border flex items-center gap-1 border-[#e3006e] px-3 py-1 rounded-sm hover:bg-[#e3006e] hover:text-white transition"
+                      >
+                        <FaTrash size={14} /> Delete
+                      </button>
+                    </div>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
       ) : (
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-5 mt-5">
+        /* Card View */
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 mt-5">
           {services.map((service) => (
             <div
               key={service._id}
@@ -136,7 +203,7 @@ const ManageServices = () => {
               <img
                 src={service.serviceImage}
                 alt={service.serviceName}
-                className="h-36 w-full object-cover rounded-md mb-3"
+                className="h-40 w-full object-cover rounded-md mb-3"
               />
 
               <div className="flex justify-between items-center mb-1">
@@ -180,8 +247,9 @@ const ManageServices = () => {
         </div>
       )}
 
+      {/* Update Modal */}
       {showModal && (
-        <div className="fixed mt-2 pt-20 max-h-screen overflow-y-auto inset-0 backdrop-blur-sm bg-black/20 flex justify-center items-center z-50">
+        <div className="fixed inset-0 backdrop-blur-sm bg-black/20 flex justify-center items-center z-50 px-4 overflow-y-auto pt-10">
           <div className="bg-white rounded-xl shadow-lg p-6 w-full max-w-xl relative">
             <h2 className="text-xl text-black font-semibold mb-4 text-left">
               Update Service
@@ -200,7 +268,7 @@ const ManageServices = () => {
                 />
               </div>
               <div>
-                <label className="block text-sm  text-black font-medium mb-1">
+                <label className="block text-sm text-black font-medium mb-1">
                   Service Image URL
                 </label>
                 <input
@@ -208,11 +276,11 @@ const ManageServices = () => {
                   name="serviceImage"
                   defaultValue={editingService?.serviceImage}
                   required
-                  className="w-full border  text-black rounded px-3 py-2"
+                  className="w-full border text-black rounded px-3 py-2"
                 />
               </div>
               <div>
-                <label className="block  text-black text-sm font-medium mb-1">
+                <label className="block text-black text-sm font-medium mb-1">
                   Price (৳)
                 </label>
                 <input
@@ -220,11 +288,11 @@ const ManageServices = () => {
                   name="price"
                   defaultValue={editingService?.price}
                   required
-                  className="w-full border  text-black rounded px-3 py-2"
+                  className="w-full border text-black rounded px-3 py-2"
                 />
               </div>
               <div>
-                <label className="block  text-black text-sm font-medium mb-1">
+                <label className="block text-black text-sm font-medium mb-1">
                   Service Area
                 </label>
                 <input
@@ -232,12 +300,11 @@ const ManageServices = () => {
                   name="serviceArea"
                   defaultValue={editingService?.serviceArea}
                   required
-                  className="w-full border  text-black rounded px-3 py-2"
+                  className="w-full border text-black rounded px-3 py-2"
                 />
               </div>
-
               <div>
-                <label className="block  text-black text-sm font-medium mb-1">
+                <label className="block text-black text-sm font-medium mb-1">
                   Description
                 </label>
                 <textarea
@@ -245,20 +312,20 @@ const ManageServices = () => {
                   defaultValue={editingService?.description}
                   rows={3}
                   required
-                  className="w-full  text-black border rounded px-3 py-2"
+                  className="w-full text-black border rounded px-3 py-2"
                 ></textarea>
               </div>
               <div className="flex justify-end gap-3 mt-4">
                 <button
                   type="button"
                   onClick={() => setShowModal(false)}
-                  className="px-4  text-black py-2 rounded bg-gray-300 hover:bg-gray-400 text-sm"
+                  className="px-4 text-black py-2 rounded bg-gray-300 hover:bg-gray-400 text-sm"
                 >
                   Cancel
                 </button>
                 <button
                   type="submit"
-                  className="px-4 py-2  rounded bg-[#e3006e] text-white hover:bg-pink-800 text-sm"
+                  className="px-4 py-2 rounded bg-[#e3006e] text-white hover:bg-pink-800 text-sm"
                 >
                   Update
                 </button>

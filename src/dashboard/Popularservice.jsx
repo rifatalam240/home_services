@@ -68,7 +68,7 @@ const Popularservice = () => {
                 <h3 className="card-title text-lg font-semibold mb-2">
                   {services.serviceName}
                 </h3>
-                <p className="text-gray-600 mb-2">
+                <p className="text-gray-400 mb-2">
                   {services.description.length > 40
                     ? services.description.slice(0, 40) + "..."
                     : services.description}

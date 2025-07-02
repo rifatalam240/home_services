@@ -13,7 +13,7 @@ const ManageServices = () => {
   useEffect(() => {
     if (user?.email) {
       fetch(
-        `https://b11a11-server-side-rifatalam240.vercel.app/userservice?email=${user.email}`,
+        `https://b11a11-server-side-rifatalam240-l6pcmu5k2.vercel.app/userservice?email=${user.email}`,
         {
           headers: { authorization: `Bearer ${user.accessToken}` },
         }
@@ -42,7 +42,7 @@ const ManageServices = () => {
     };
 
     fetch(
-      `https://b11a11-server-side-rifatalam240.vercel.app/updateservice/${editingService._id}`,
+      `https://b11a11-server-side-rifatalam240-l6pcmu5k2.vercel.app/updateservice/${editingService._id}`,
       {
         method: "PUT",
         headers: {
@@ -83,7 +83,7 @@ const ManageServices = () => {
     }).then((result) => {
       if (result.isConfirmed) {
         fetch(
-          `https://b11a11-server-side-rifatalam240.vercel.app/deleteservice/${id}`,
+          `https://b11a11-server-side-rifatalam240-l6pcmu5k2.vercel.app/deleteservice/${id}`,
           {
             method: "DELETE",
             headers: {
@@ -96,7 +96,11 @@ const ManageServices = () => {
           .then((data) => {
             if (data.deletedCount > 0) {
               setServices(services.filter((service) => service._id !== id));
-              Swal.fire("Deleted!", "Your service has been deleted.", "success");
+              Swal.fire(
+                "Deleted!",
+                "Your service has been deleted.",
+                "success"
+              );
             } else {
               Swal.fire("Error", "Failed to delete the service.", "error");
             }
@@ -116,20 +120,23 @@ const ManageServices = () => {
         </h2>
         <div className="flex gap-2">
           <button
-            className={`btn btn-sm flex items-center gap-1 ${viewMode === "table" ? "btn-primary" : "btn-outline"}`}
+            className={`btn btn-sm flex items-center gap-1 ${
+              viewMode === "table" ? "btn-primary" : "btn-outline"
+            }`}
             onClick={() => setViewMode("table")}
           >
             <FaTable /> Table View
           </button>
           <button
-            className={`btn btn-sm flex items-center gap-1 ${viewMode === "card" ? "btn-primary" : "btn-outline"}`}
+            className={`btn btn-sm flex items-center gap-1 ${
+              viewMode === "card" ? "btn-primary" : "btn-outline"
+            }`}
             onClick={() => setViewMode("card")}
           >
             <FaThLarge /> Card View
           </button>
         </div>
       </div>
-
 
       {/* No services message */}
       {services.length === 0 ? (

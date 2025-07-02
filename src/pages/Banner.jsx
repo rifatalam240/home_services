@@ -15,10 +15,7 @@ const Banner = () => {
   // 🔻 Click outside to close dropdown
   useEffect(() => {
     const handleClickOutside = (event) => {
-      if (
-        dropdownRef.current &&
-        !dropdownRef.current.contains(event.target)
-      ) {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
         setResults([]);
       }
     };
@@ -36,7 +33,7 @@ const Banner = () => {
     }
     setLoading(true);
     fetch(
-      `https://b11a11-server-side-rifatalam240.vercel.app/search?searchparams=${search}`
+      `https://b11a11-server-side-rifatalam240-l6pcmu5k2.vercel.app/search?searchparams=${search}`
     )
       .then((res) => res.json())
       .then((data) => {
@@ -61,7 +58,7 @@ const Banner = () => {
     debounceTimeout.current = setTimeout(() => {
       setLoading(true);
       fetch(
-        `https://b11a11-server-side-rifatalam240.vercel.app/search?searchparams=${search}`
+        `https://b11a11-server-side-rifatalam240-l6pcmu5k2.vercel.app/search?searchparams=${search}`
       )
         .then((res) => res.json())
         .then((data) => {
@@ -155,7 +152,9 @@ const Banner = () => {
 
           {/* 🚫 No Result */}
           {search && !loading && results.length === 0 && (
-            <div className="text-white mt-4">No services matched your search.</div>
+            <div className="text-white mt-4">
+              No services matched your search.
+            </div>
           )}
         </div>
       </motion.div>

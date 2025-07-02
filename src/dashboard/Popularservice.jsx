@@ -20,7 +20,7 @@ const Popularservice = () => {
   // const shortDescription =
   // service.description.split(" ").slice(0, 10).join(" ") + "...";
   useEffect(() => {
-    fetch("https://b11a11-server-side-rifatalam240.vercel.app/service")
+    fetch("https://b11a11-server-side-rifatalam240-l6pcmu5k2.vercel.app/service")
       .then((res) => res.json())
       .then((data) => setService(data))
       .catch((error) => console.log(error));

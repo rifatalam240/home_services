@@ -2,38 +2,79 @@ import React from "react";
 import signup from "../assets/Animation - 1749187022838.json";
 import Lottie from "lottie-react";
 import { useAllContext } from "../context/AllContext";
+import { updateProfile } from "firebase/auth";
 import Swal from "sweetalert2";
 import { toast } from "react-toastify";
 import { NavLink, useNavigate } from "react-router";
+import axios from "axios";
 
 const Signup = () => {
+  const { user, loading } = useAllContext();
   const navigate = useNavigate();
   const { createusersignup, googlepopup } = useAllContext();
-  const handlesignup = (e) => {
+  const imgbbkey = import.meta.env.VITE_IMGBB_KEY;
+  console.log("imgbbkey", imgbbkey);
+
+  const handlesignup = async (e) => {
     e.preventDefault();
     const form = e.target;
-    const formdata = new FormData(form);
-    const data = Object.fromEntries(formdata.entries());
-    console.log("data", data);
-    const { email, password } = data;
+    const name = form.name.value;
+    const email = form.email.value;
+    const password = form.password.value;
+    const imageFile = form.image.files[0];
 
-    createusersignup(email, password)
-      .then((result) => result.user)
-      .then((user) => {
-        console.log(user);
-        Swal.fire({
-          position: "top-end",
-          icon: "success",
-          title: "Signup Succesfully",
-          showConfirmButton: false,
-          timer: 1500,
-        });
-        form.reset();
-      })
-      .catch((error) => {
-        console.log(error);
+    if (!imageFile) {
+      toast.error("Please select a profile image!");
+      return;
+    }
+
+    if (loading) {
+      toast.error("Please wait, loading...");
+      return;
+    }
+
+    try {
+      // 1️⃣ Upload image to imgbb
+      const imgFormData = new FormData();
+      imgFormData.append("image", imageFile);
+      const imgRes = await axios.post(
+        `https://api.imgbb.com/1/upload?key=${imgbbkey}`,
+        imgFormData
+      );
+
+      if (!imgRes.data.success) {
+        toast.error("Image upload failed!");
+        return;
+      }
+
+      const imageUrl = imgRes.data.data.display_url;
+
+      // 2️⃣ Create user in Firebase
+      const userCredential = await createusersignup(email, password);
+
+      // 3️⃣ Update Firebase profile
+      await updateProfile(userCredential.user, {
+        displayName: name,
+        photoURL: imageUrl,
       });
+
+      // 4️⃣ Success alert
+      Swal.fire({
+        position: "top-end",
+        icon: "success",
+        title: "Signup Successfully",
+        showConfirmButton: false,
+        timer: 1500,
+      });
+
+      form.reset();
+      navigate("/");
+    } catch (error) {
+      console.error(error);
+      toast.error("Signup failed!");
+    }
   };
+
   const handleGoogleSignup = () => {
     googlepopup()
       .then((res) => {
@@ -69,8 +110,8 @@ const Signup = () => {
                     />
                     <label className="label">Photo URL</label>
                     <input
-                      type="text"
-                      name="url"
+                      type="file"
+                      name="image"
                       className="input"
                       placeholder="Photo URL"
                     />

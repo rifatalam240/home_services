@@ -4,7 +4,7 @@ import { useAllContext } from "../context/AllContext";
 import Swal from "sweetalert2";
 
 const ManageServices = () => {
-  const { user } = useAllContext();
+  const { user,loading,setLoading } = useAllContext();
   const [services, setServices] = useState([]);
   const [showModal, setShowModal] = useState(false);
   const [editingService, setEditingService] = useState(null);

@@ -101,7 +101,7 @@ const Navbar = () => {
       <div className="navbar-end flex gap-x-4">
         {" "}
         <button
-          className="btn btn-ghost btn-circle "
+          className="btn btn-ghost pl-5  "
           onClick={toggleTheme}
           aria-label="Toggle Dark Mode"
         >
@@ -116,7 +116,7 @@ const Navbar = () => {
             {" "}
             <a
               onClick={handlelogout}
-              className="px-4 py-2 bg-[#e3006e] text-white rounded hover:bg-blue-700 transition-all"
+              className="px-2 py-2 bg-[#e3006e] text-white rounded hover:bg-blue-700 transition-all"
             >
               Sign Out
             </a>

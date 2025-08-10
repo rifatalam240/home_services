@@ -4,6 +4,7 @@ import Popularservice from "../dashboard/Popularservice";
 import WhyChooseUs from "../extrasection/WhyChooseUs";
 import HowItWorks from "../extrasection/HowItWorks";
 import FAQ from "../extrasection/FAQ";
+import StatsSection from "../extrasection/StatsSection";
 
 const Home = () => {
   return (
@@ -13,6 +14,7 @@ const Home = () => {
       <WhyChooseUs></WhyChooseUs>
       <HowItWorks></HowItWorks>
       <FAQ></FAQ>
+      <StatsSection></StatsSection>
     </div>
   );
 };

@@ -34,7 +34,7 @@ export default function StatsSection() {
   return (
     <div className="bg-gray-100 py-10">
       <div className="text-center mb-8">
-        <h2 className="text-3xl font-bold">We Provide Best Home Repair Services</h2>
+        <h2 className="text-3xl text-black font-bold">We Provide Best Home Repair Services</h2>
         <p className="text-gray-600">
           Our platform connects you with experienced repair professionals for all your home service needs — at your convenience.
         </p>

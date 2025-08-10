@@ -41,12 +41,12 @@ export default function StatsSection() {
       </div>
       <div
         ref={ref}
-        className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 max-w-6xl mx-auto px-4"
+        className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 max-w-6xl mx-auto px-4 "
       >
         {stats.map((stat, index) => (
           <div
             key={index}
-            className="bg-white rounded-2xl shadow-lg p-6 flex flex-col items-center"
+            className="bg-gray-200 rounded-2xl shadow-lg p-6 flex flex-col items-center hover:scale-105"
           >
             {stat.icon}
             <h3 className="text-3xl text-black font-bold mt-4">

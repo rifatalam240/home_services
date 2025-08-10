@@ -32,10 +32,10 @@ export default function StatsSection() {
   });
 
   return (
-    <div className="bg-gray-100 py-10">
-      <div className="text-center mb-8">
-        <h2 className="text-3xl text-black font-bold">We Provide Best Home Repair Services</h2>
-        <p className="text-gray-600">
+    <div className=" py-10">
+      <div className="text-center mb-16">
+        <h2 className="text-3xl text-[#e3006e] font-bold">We Provide Best Home Repair Services</h2>
+        <p className="text-gray-400">
           Our platform connects you with experienced repair professionals for all your home service needs — at your convenience.
         </p>
       </div>
@@ -49,7 +49,7 @@ export default function StatsSection() {
             className="bg-white rounded-2xl shadow-lg p-6 flex flex-col items-center"
           >
             {stat.icon}
-            <h3 className="text-3xl font-bold mt-4">
+            <h3 className="text-3xl text-black font-bold mt-4">
               {inView ? <CountUp start={0} end={stat.value} duration={2} /> : 0} +
             </h3>
             <p className="text-gray-600">{stat.label}</p>

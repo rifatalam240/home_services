@@ -33,7 +33,7 @@ const Banner = () => {
     }
     setLoading(true);
     fetch(
-      `https://b11a11-server-side-rifatalam240.vercel.app/search?searchparams=${search}`
+      `https://b11a11-server-side-rifatalam240-j192k8j33.vercel.app/search?searchparams=${search}`
     )
       .then((res) => res.json())
       .then((data) => {
@@ -58,7 +58,7 @@ const Banner = () => {
     debounceTimeout.current = setTimeout(() => {
       setLoading(true);
       fetch(
-        `https://b11a11-server-side-rifatalam240.vercel.app/search?searchparams=${search}`
+        `https://b11a11-server-side-rifatalam240-j192k8j33.vercel.app/search?searchparams=${search}`
       )
         .then((res) => res.json())
         .then((data) => {

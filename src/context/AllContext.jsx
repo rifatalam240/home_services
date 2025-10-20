@@ -27,7 +27,7 @@ const AllContextProvider = ({ children }) => {
       // if (currentUser?.email) {
       //   const userdata = { email: currentUser.email };
       //   axios
-      //     .post("https://b11a11-server-side-rifatalam240.vercel.app/jwt", userdata)
+      //     .post("https://b11a11-server-side-rifatalam240-j192k8j33.vercel.app/jwt", userdata)
       //     .then((res) => {
       //       console.log("token", res.data.token);
       //       const token = res.data.token;
@@ -35,7 +35,7 @@ const AllContextProvider = ({ children }) => {
       //     })
       //     .catch((error) => console.log(error));
       // }
-      console.log("currentuser", currentUser);
+      // console.log("currentuser", currentUser);
     });
     return () => unsubscribe();
   }, []);

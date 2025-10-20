@@ -3,7 +3,7 @@ import React from 'react';
 const FAQ = () => {
   return (
     <div className="join join-vertical bg-base-100 max-w-2xl mx-auto my-10 flex">
-      <h2 className="text-3xl font-bold text-center mb-6 text-[#e3006e]">Frequently Asked Questions</h2>
+      <h2 className="text-3xl font-bold text-center mb-6 hover:text-red-700 text-[#e3006e]">Frequently Asked Questions</h2>
 
       <div className="collapse collapse-arrow join-item border border-base-300">
         <input type="radio" name="faq-accordion" defaultChecked />

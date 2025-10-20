@@ -10,7 +10,9 @@ const Allservice = () => {
 
   useEffect(() => {
     setLoading(true);
-    fetch("https://b11a11-server-side-rifatalam240.vercel.app/allservice")
+    fetch(
+      "https://b11a11-server-side-rifatalam240-j192k8j33.vercel.app/allservice"
+    )
       .then((res) => res.json())
       .then((data) => {
         setServices(data);

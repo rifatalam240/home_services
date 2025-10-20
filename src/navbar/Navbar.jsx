@@ -30,7 +30,7 @@ const Navbar = () => {
   const [theme, setTheme] = useState(localStorage.getItem("theme") || "light");
   const navigate = useNavigate();
   const { user, handlesignout } = useAllContext();
-  console.log("photo url", user);
+  // console.log("photo url", user);
 
   const toggleName = () => {
     setShowname((prev) => !prev);

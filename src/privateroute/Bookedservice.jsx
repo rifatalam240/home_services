@@ -10,7 +10,7 @@ const BookedServices = () => {
     const fetchBookings = async () => {
       try {
         const res = await fetch(
-          `https://b11a11-server-side-rifatalam240.vercel.app/showbookingservice?email=${user?.email}`,
+          `https://b11a11-server-side-rifatalam240-j192k8j33.vercel.app/showbookingservice?email=${user?.email}`,
           {
             headers: {
               "Content-Type": "application/json",

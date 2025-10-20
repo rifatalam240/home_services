@@ -29,11 +29,8 @@ const Addservice = () => {
 
     axios
       .post(
-        "https://b11a11-server-side-rifatalam240.vercel.app/addservice",
-        servicedata,
-        {
-          headers: { authorization: `Bearer ${user.accessToken}` },
-        }
+        "https://b11a11-server-side-rifatalam240-j192k8j33.vercel.app/addservice",
+        servicedata
       )
       .then((res) => {
         console.log(res);

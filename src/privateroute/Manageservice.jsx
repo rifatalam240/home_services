@@ -4,7 +4,7 @@ import { useAllContext } from "../context/AllContext";
 import Swal from "sweetalert2";
 
 const ManageServices = () => {
-  const { user,loading,setLoading } = useAllContext();
+  const { user, loading, setLoading } = useAllContext();
   const [services, setServices] = useState([]);
   const [showModal, setShowModal] = useState(false);
   const [editingService, setEditingService] = useState(null);
@@ -13,7 +13,7 @@ const ManageServices = () => {
   useEffect(() => {
     if (user?.email) {
       fetch(
-        `https://b11a11-server-side-rifatalam240.vercel.app/userservice?email=${user.email}`,
+        `https://b11a11-server-side-rifatalam240-j192k8j33.vercel.app/userservice?email=${user.email}`,
         {
           headers: { authorization: `Bearer ${user.accessToken}` },
         }
@@ -42,7 +42,7 @@ const ManageServices = () => {
     };
 
     fetch(
-      `https://b11a11-server-side-rifatalam240.vercel.app/updateservice/${editingService._id}`,
+      `https://b11a11-server-side-rifatalam240-j192k8j33.vercel.app/updateservice/${editingService._id}`,
       {
         method: "PUT",
         headers: {
@@ -83,7 +83,7 @@ const ManageServices = () => {
     }).then((result) => {
       if (result.isConfirmed) {
         fetch(
-          `https://b11a11-server-side-rifatalam240.vercel.app/deleteservice/${id}`,
+          `https://b11a11-server-side-rifatalam240-j192k8j33.vercel.app/deleteservice/${id}`,
           {
             method: "DELETE",
             headers: {
